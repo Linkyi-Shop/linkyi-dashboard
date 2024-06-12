@@ -8,7 +8,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card form-signin p-4 rounded shadow">
-                        <form action="{{ route('login.admin') }}" method="post">
+                        <form action="{{ route('login') }}" method="post">
                             @csrf
                             <img src="/backoffice/assets/images/favicon.png"
                                 class="avatar avatar-medium mb-4 d-block mx-auto mt-2" alt="">

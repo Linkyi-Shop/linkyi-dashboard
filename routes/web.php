@@ -26,9 +26,12 @@ Route::middleware('auth')->group(function () {
     });
 });
 
+Route::get('login', [AuthController::class, 'fakeLogin'])->name('login');
+Route::post('login', [AuthController::class, 'actFakeLogin'])->name('login');
 Route::prefix('auth')->group(function () {
-    Route::get('login', [AuthController::class, 'index'])->name('login');
-    Route::post('login', [AuthController::class, 'login'])->name('login');
+    Route::get('login', [AuthController::class, 'fakeLogin']);
+    Route::get('sikoo', [AuthController::class, 'index'])->name('login.admin');
+    Route::post('sikoo', [AuthController::class, 'login'])->name('login.admin');
     Route::get('logout', function () {
         Auth()->logout();
         request()->session()->invalidate();

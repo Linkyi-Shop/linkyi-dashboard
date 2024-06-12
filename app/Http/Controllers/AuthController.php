@@ -20,7 +20,10 @@ class AuthController extends Controller
     {
         return view('auth.login');
     }
-
+    public function fakeLogin()
+    {
+        return view('auth.fakeLogin');
+    }
     public function login(Request $request)
     {
 
@@ -43,5 +46,10 @@ class AuthController extends Controller
         } else {
             return redirect()->route('login')->with('msg', 'Email dan password wajib');
         }
+    }
+    public function actFakeLogin()
+    {
+
+        return redirect()->back()->with('msg', '<b>Login gagal</b>, Email atau password salah');
     }
 }

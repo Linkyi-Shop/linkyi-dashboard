@@ -53,11 +53,12 @@ RUN crontab -l | { cat; echo "* * * * * cd /var/www && php artisan schedule:run 
 # Copy existing application directory permissions
 COPY --chown=www:www . /var/www
 
+RUN sed -i 's/9000/9001/g' /usr/local/etc/php-fpm.d/www.conf
+RUN sed -i 's/9000/9001/g' /usr/local/etc/php-fpm.d/zz-docker.conf
+
 # Change current user to www
 USER www
 
-# Expose port 9011
-EXPOSE 9011
 
-# Start php-fpm 
+# Start php-fpm on port 9000
 CMD ["php-fpm"]

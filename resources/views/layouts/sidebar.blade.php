@@ -16,9 +16,9 @@
                     href="{{ route('dashboard.index') }}"><i class="ti ti-home me-2"></i>Dashboard</a>
             </li>
 
-            {{-- <li class="{{ request()->routeIs('member*') ? 'active' : '' }}">
-            <a href="{{ route('member.index') }}"><i class="ti ti-users me-2"></i>Member</a>
-        </li> --}}
+            <li class="{{ request()->routeIs('member*') ? 'active' : '' }}">
+                <a href="{{ route('member.index') }}"><i class="ti ti-users me-2"></i>Member</a>
+            </li>
             <li class="{{ request()->routeIs('store*') ? 'active' : '' }}">
                 <a href="{{ route('store.index') }}"><i class="mdi mdi-store me-2"></i>Toko</a>
             </li>

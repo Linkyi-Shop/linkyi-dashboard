@@ -9,6 +9,7 @@
 .env.backup
 .env.production
 .phpunit.result.cache
+.linkyi-storage-key.json
 Homestead.json
 Homestead.yaml
 auth.json

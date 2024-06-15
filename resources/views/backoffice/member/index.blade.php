@@ -38,7 +38,7 @@
                                     <th class="border-bottom p-3" width="5%">No.</th>
                                     <th class="text-left border-bottom p-3" width="30%">Nama Lengkap</th>
                                     <th class="text-left border-bottom p-3" width="25%">Email</th>
-                                    <th class="text-left border-bottom p-3" width="20%">Status</th>
+                                    <th class="text-center border-bottom p-3" width="20%">Status</th>
                                     <th class="text-center border-bottom p-3" width="25%">Aksi</th>
                                 </tr>
                             </thead>
@@ -56,25 +56,23 @@
                                         <td class="text-left p-3">
                                             {{ $item->email }}
                                         </td>
-                                        <td class="text-left p-3">
-                                            {{ $item->status }}
+                                        <td class="text-center p-3">
+                                            @if ($item->status == 'verified')
+                                                <a href="#" class="badge bg-success shadow p-2"><i
+                                                        data-feather="check-circle" class="fea icon-sm"></i>
+                                                    Terverifikasi
+                                                </a>
+                                            @else
+                                                <a href="#" class="badge bg-danger shadow p-2"><i
+                                                        data-feather="minus-circle" class="fea icon-sm"></i>
+                                                    Belum Verifikasi
+                                                </a>
+                                            @endif
                                         </td>
                                         <td class="text-center p-3">
                                             <a href="{{ route('member.show', $item->id) }}"
                                                 class="shadow-sm badge p-2 bg-light text-secondary border border-secondary"><i
-                                                    data-feather="eye" class="fea icon-sm"></i></a>
-                                            <form action="{{ route('member.destroy', $item->id) }}" method="POST"
-                                                class="d-inline">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit"
-                                                    onclick="return confirm('Apakah Anda yakin ingin menghapus pengguna ini?')"
-                                                    class="shadow-sm badge p-2 bg-light text-danger border border-danger">
-                                                    <i data-feather="trash" class="fea icon-sm"></i>
-                                                </button>
-                                            </form>
-
-
+                                                    data-feather="user" class="fea icon-sm"></i></a>
                                         </td>
                                     </tr>
                                 @endforeach

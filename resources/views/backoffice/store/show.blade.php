@@ -143,7 +143,8 @@
                                     <thead>
                                         <tr>
                                             <th class="border-bottom text-center p-3" width="10%">Thumbnail</th>
-                                            <th class="border-bottom text-left p-3" width="60%">Produk</th>
+                                            <th class="border-bottom text-left p-3" width="45%">Produk</th>
+                                            <th class="border-bottom text-center p-3" width="15%">Harga</th>
                                             <th class="border-bottom text-center p-3" width="20%">Status</th>
                                         </tr>
                                     </thead>
@@ -161,6 +162,9 @@
                                                     <br>
                                                     <small class="text-bold text-primary"><i class="ti ti-tag"></i>
                                                         {{ $item->productCategory->name }}</small>
+                                                </td>
+                                                <td class="text-center">
+                                                    <b class="text-dark"> {{ $item->getPrice() }}</b>
                                                 </td>
                                                 <td class="text-center p-3">
                                                     @if ($item->is_active == 1)

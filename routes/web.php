@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\MemberController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\ThemeController;
 use Illuminate\Support\Facades\Route;
@@ -16,6 +17,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('store', StoreController::class)->only("show", "index");
 
     //> users
+    Route::resource('member', MemberController::class)->only('show', 'index', 'destroy');
+    Route::get('member/setStatus/{id}', [MemberController::class, 'updateVerificationStatus'])->name('member.setVerified');
 
     //> profile
     Route::prefix('profile')->group(function () {

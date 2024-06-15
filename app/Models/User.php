@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -20,7 +21,13 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'google_id',
+        'status',
+        'email_verified_at'
     ];
+    const STATUS_VERIFIED = 'verified';
+    const STATUS_UNVERIFIED = 'unverified';
+    public $incrementing = false;
 
     /**
      * The attributes that should be hidden for serialization.
@@ -43,5 +50,13 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+    public function store(): HasOne
+    {
+        return $this->hasOne(Store::class, 'user_id', 'id');
+    }
+    public function storeStatus()
+    {
+        return $this?->store != null;
     }
 }

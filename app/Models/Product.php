@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\CurrencyHelper;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -18,7 +19,14 @@ class Product extends Model
     {
         return sprintf('https://storage.googleapis.com/%s/%s', env('GOOGLE_CLOUD_STORAGE_BUCKET'), $this->thumbnail);
     }
-
+    public function getPrice()
+    {
+        if ($this->price > 0) {
+            return CurrencyHelper::currencyIDR($this->price);
+        } else {
+            return 'Gratis';
+        }
+    }
     public function linkProducts(): HasMany
     {
         return $this->hasMany(LinkProduct::class, 'product_id', 'id');

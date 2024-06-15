@@ -2,6 +2,14 @@
 @section('title', 'Detail member')
 @section('style')
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+    <style>
+        .logo {
+            object-fit: cover;
+            object-position: center;
+            height: 120px;
+            width: 100%
+        }
+    </style>
 @endsection
 @section('content')
     <div class="container-fluid">
@@ -34,63 +42,131 @@
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"> </button>
                         </div>
                     @endif
-                    <div class="card border-0 rounded p-4 shadow mt-4">
-                        <div class="row align-items-top">
-                            <div class="col-lg-8 col-md-7 mt-4 mt-sm-0">
-                                <div class="section-title ms-md-4">
-                                    <h5>{{ $data->name }}
-                                        @if ($data->status_verified == 'verified')
-                                            <i class="mdi mdi-check-circle text-info"></i>
-                                        @endif
-                                    </h5>
-                                    <div class="">
-                                        <h6 class="text-muted mb-0"><i data-feather="mail" class="fea icon-sm"></i>
-                                            {{ $data->email }} </h6>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 mt-4 mt-sm-0">
-                                <div class="section-title ms-md-4">
-                                    <div class="text-end">
-
-                                        @if ($data->status_verified == 'verified')
-                                            <a href="{{ route('member.setVerified', $data->id) }}"
-                                                class="btn btn-danger shadow btn-sm"><i data-feather="minus-circle"
-                                                    class="fea icon-sm"></i>
-                                                Batal Verifikasi
+                    <div class="row">
+                        <div class="col-md-6">
+                            <table class="table table-light rounded table-borderless">
+                                <tr>
+                                    <td>Pemilik</td>
+                                    <td>:</td>
+                                    <td>{{ $data->name }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Email</td>
+                                    <td>:</td>
+                                    <td>{{ $data->email }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Login dengan google</td>
+                                    <td>:</td>
+                                    <td>{{ $data->google_id ? 'Aktif' : 'Tidak Aktif' }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Bergabung pada</td>
+                                    <td>:</td>
+                                    <td>{{ $data->created_at->translatedFormat('d F Y') }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Status</td>
+                                    <td>:</td>
+                                    <td>
+                                        @if ($data->status == 'verified')
+                                            <a href="#" class="badge bg-success shadow p-2"><i
+                                                    data-feather="check-circle" class="fea icon-sm"></i>
+                                                Terverifikasi
                                             </a>
                                         @else
-                                            <a href="{{ route('member.setVerified', $data->id) }}"
-                                                class="btn btn-success shadow btn-sm"><i data-feather="check-circle"
-                                                    class="fea icon-sm"></i>
-                                                verifikasi
+                                            <a href="#" class="badge bg-danger shadow p-2"><i
+                                                    data-feather="minus-circle" class="fea icon-sm"></i>
+                                                Belum Verifikasi
                                             </a>
                                         @endif
-                                    </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card border-0 rounded p-4 shadow">
+                                <div class="row">
                                     @if (isset($data?->store?->name))
-                                        Toko
-                                        <br>
-                                        <h3>{{ $data->store->name }}</h3>
-                                        <a class="btn btn-sm btn-primary"
-                                            href="{{ route('store.show', $data->store->id) }}">Lihat toko</a>
+                                        <div class="col-md-4">
+                                            <img class="logo rounded" src="{{ $data->store->getLogo() }}" alt=""
+                                                srcset="">
+                                            <hr>
+                                            <a class="btn btn-sm btn-primary col-12"
+                                                href="{{ route('store.show', $data->store->id) }}">Lihat
+                                                toko</a>
+                                        </div>
+                                        <div class="col-8">
+                                            <h3>{{ $data->store->name }}</h3>
+                                            <p>{{ $data->store->description }}</p>
+
+                                        </div>
                                     @endif
                                 </div>
                             </div>
-                        </div><!--end row-->
+                        </div>
                     </div>
 
 
+
                 </div><!--end col-->
+                <div class="bg-white shadow rounded py-4 mt-4">
+                    <div class="row align-items-top">
+                        <div class="col-lg-8 col-md-7 mt-4 mt-sm-0">
+                            <div class="section-title ms-md-4">
+                                <h5> Pengaturan
+                                </h5>
+                                <div class="">
+                                    <h6 class="text-muted mb-0">Jika menghapus akun semua data pengguna akan dihapus
+                                        secara permanen
+                                    </h6>
+                                </div>
+                                <br>
+                                <button type="button" class="shadow-sm badge p-2 bg-light text-danger border border-danger"
+                                    data-bs-toggle="modal" data-bs-target="#delete-account"><i data-feather="trash"
+                                        class="fea icon-sm"></i> Hapus akun</button>
+
+                            </div>
+                        </div>
+                    </div><!--end row-->
+                </div>
             </div><!--end row-->
+
 
         </div>
     </div><!--end container-->
-
+    <div class="modal fade" id="delete-account" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded shadow border-0">
+                <div class="modal-body py-5">
+                    <div class="text-center">
+                        <img src="/backoffice/assets/images/user-delete-icon.webp"
+                            class="avatar avatar-medium rounded-circle shadow" alt="">
+                        <div class="mt-4">
+                            <h4>Hapus akun secara permanen ?</h4>
+                            <p class="text-muted">Dengan menghapus akun semua produk dan history kunjungan akan dihapus,
+                                Untuk menjaga kepercayaan pengguna pastikan status akun Tidak aktif sebelum dihapus secara
+                                permanen </p>
+                            <div class="mt-4">
+                                <form action="{{ route('member.destroy', $data->id) }}" method="POST" class="d-inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger">
+                                        <i data-feather="trash" class="fea icon-sm"></i> Hapus sekarang
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 @section('script')
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    {{-- <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script> --}}
 
     <script>
         $('.status').on('change', function() {
@@ -98,13 +174,13 @@
             $('.statusForm').submit();
         });
         // Simple Datatable
-        $('.table').DataTable({
-            "perPageSelect": false,
-            "sortable": false,
-            "ordering": false,
-            "info": true,
-            "autoWidth": true,
-            "responsive": true,
-        });
+        // $('.table').DataTable({
+        //     "perPageSelect": false,
+        //     "sortable": false,
+        //     "ordering": false,
+        //     "info": true,
+        //     "autoWidth": true,
+        //     "responsive": true,
+        // });
     </script>
 @endsection

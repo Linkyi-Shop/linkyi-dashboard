@@ -23,9 +23,10 @@ class UpdateThemeRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
+            'path' => 'required|string|max:255',
             'is_premium' => 'required|boolean',
             'price' => 'required_if:is_premium,1|string',
-            'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'thumbnail' => 'sometimes|nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'link' => ['required', 'url', 'regex:/^https?:\/\/(?:www\.)?linkyi\.shop(?:\/|$)/i'],
         ];
     }
@@ -35,6 +36,9 @@ class UpdateThemeRequest extends FormRequest
             'name.required' => 'Nama wajib diisi.',
             'name.string' => 'Nama harus berupa string.',
             'name.max' => 'Nama maksimal 255 karakter.',
+            'path.required' => 'Tema path wajib diisi.',
+            'path.string' => 'Tema path harus berupa string.',
+            'path.max' => 'Tema path maksimal 255 karakter.',
             'is_premium.required' => 'Tipe tema wajib diisi.',
             'is_premium.boolean' => 'Tipe tema tidak valid.',
             'price.required_if' => 'Harga wajib diisi jika Tema Premium.',

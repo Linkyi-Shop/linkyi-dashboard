@@ -31,6 +31,7 @@ class ThemeController extends Controller
             $thumbnail = LinkyiStorage::uploadThemeStore($request->thumbnail);
             $data = [
                 'name' => $request->name,
+                'path' => $request->path,
                 'price' => CurrencyHelper::IDRToNum($request->price),
                 'is_premium' => $request->is_premium,
                 'link' => $request->link,
@@ -59,6 +60,7 @@ class ThemeController extends Controller
             $theme = Theme::findOrFail($id);
             $data = [
                 'name' => $request->name,
+                'path' => $request->path,
                 'price' => CurrencyHelper::IDRToNum($request->price),
                 'is_premium' => $request->is_premium,
                 'link' => $request->link,

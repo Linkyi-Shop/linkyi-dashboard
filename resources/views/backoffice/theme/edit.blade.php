@@ -32,14 +32,31 @@
                         <div class="row">
 
                             <div class="col-md-9">
-                                <div>
-                                    <label for="name" class="form-label">Tema <span class="text-danger">*</span></label>
-                                    <input type="text" class="@error('name') is-invalid @enderror form-control"
-                                        id="name" name="name" value="{{ old('name') ?? $data->name }}"
-                                        placeholder="Nama tema">
-                                    @error('name')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div>
+                                            <label for="name" class="form-label">Tema <span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text" class="@error('name') is-invalid @enderror form-control"
+                                                id="name" name="name" value="{{ old('name') ?? $data->name }}"
+                                                placeholder="Nama tema">
+                                            @error('name')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div>
+                                            <label for="path" class="form-label">Path Tema <span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text" class="@error('path') is-invalid @enderror form-control"
+                                                id="path" name="path" value="{{ old('path') ?? $data->path }}"
+                                                placeholder="Nama tema">
+                                            @error('path')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-6">
